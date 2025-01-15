@@ -6,10 +6,16 @@ import { getEnvVars } from './utils';
 
 async function bootstrap() {
   const env = getEnvVars().NODE_ENV;
+  const app = await NestFactory.create(AppModule);
+
   if (env === 'local') {
     dotenv.config({ path: `.env.local` });
+    // 启用 CORS 并配置允许的源
+    app.enableCors({
+      origin: 'http://localhost:3333',
+      methods: 'GET, POST, PUT, DELETE',
+    });
   }
-  const app = await NestFactory.create(AppModule);
   if (env !== 'prod') {
     const options = new DocumentBuilder()
       .setTitle('Tracker Swagger')
@@ -27,6 +33,7 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, options);
     SwaggerModule.setup('swagger', app, document);
   }
+
   await app.listen(process.env.PORT);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
