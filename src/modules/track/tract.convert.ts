@@ -1,6 +1,6 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ContextService } from '@/supports';
-import { getCurrentTime } from '@/utils';
+import { getCurrentTime, convertCamelToSnaceCase } from '@/utils';
 import { CreateTrackDTO, InsertTrackTableDTO } from './dto';
 
 @Injectable()
@@ -19,6 +19,6 @@ export class TractConvert {
     dto.os = userAgentInfo?.os ?? null;
     dto.browser = userAgentInfo?.browser ?? null;
     dto.device = userAgentInfo?.device ?? null;
-    return dto;
+    return convertCamelToSnaceCase(dto);
   }
 }

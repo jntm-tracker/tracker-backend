@@ -14,3 +14,16 @@ export const convertJsonPropertyToString = (
   }
   return result.slice(0, -1);
 };
+
+export const convertCamelToSnaceCase = (
+  record: Record<string, any>,
+): Record<string, any> => {
+  const formatRecord = Object?.keys(record)?.reduce((prev, cur) => {
+    const key = cur.replace(/([a-z])([A-Z])/g, '$1_$2').toLowerCase();
+    return {
+      ...prev,
+      [key]: record?.[cur],
+    };
+  }, {});
+  return formatRecord;
+};
