@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
-// import { ClickHouseService } from './click-house.service';
+import { ClickHouseService } from './click-house.service';
 
 @Module({
-  providers: [],
-  exports: [],
+  providers: [ClickHouseService],
+  exports: [ClickHouseService],
 })
 export class ClickHouseModule {}
